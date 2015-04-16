@@ -1,0 +1,1 @@
+docker run -v "$HOME/Images:/Images" -e "DISPLAY=:0" -e "UID=`id -u $USER`" -e "GUID=`id -g $USER`" --net=host --rm -ti ubuntu/gimp

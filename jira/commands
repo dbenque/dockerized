@@ -10,16 +10,16 @@ docker run --name dbdata postgresjira echo "Data-only container for postgres" &&
 docker run --name jiradata cptactionhank/atlassian-jira echo "Data-only container for jira" && docker run --detach --name jira --publish 8080:8080 --volumes-from jiradata --net=host cptactionhank/atlassian-jira
 
 ########## Backups
-docker run --rm --volumes-from dbdata -v $(pwd):/backup debian tar cvf /backup/backup.postgres.tar /var/lib/postgresql/data
-docker run --rm --volumes-from jiradata -v $(pwd):/backup debian tar cvf /backup/backup.jira.tar /var/local/atlassian/jira
+docker run --rm --volumes-from dbdata -v $(pwd):/backup debian tar cvzf /backup/backup.postgres.$(date +%Y%m%d.%H%m).tar.gz /var/lib/postgresql/data
+docker run --rm --volumes-from jiradata -v $(pwd):/backup debian tar cvzf /backup/backup.jira.$(date +%Y%m%d.%H%m).tar.gz /var/local/atlassian/jira
 
 ########## Restore
 #The database part
 docker run --name dbdata postgresjira echo "Data-only container for postgres"
-docker run --rm --volumes-from dbdata -v $(pwd):/backup debian tar xvf /backup/backup.postgres.tar
+docker run --rm --volumes-from dbdata -v $(pwd):/backup debian tar xvzf /backup/backup.postgres.tar.gz
 docker run -d --volumes-from dbdata --name dbjira --net=host postgresjira
 
 #Jira
 docker run --name jiradata cptactionhank/atlassian-jira echo "Data-only container for jira"
-docker run --rm --volumes-from jiradata -v $(pwd):/backup debian tar xvf /backup/backup.jira.tar
+docker run --rm --volumes-from jiradata -v $(pwd):/backup debian tar xvzf /backup/backup.jira.tar.gz
 docker run --detach --name jira --publish 8080:8080 --volumes-from jiradata --net=host cptactionhank/atlassian-jira

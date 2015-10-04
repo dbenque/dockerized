@@ -1,0 +1,3 @@
+echo "Creating user"
+useradd -u $UID -g $GUID eclipseuser
+su eclipseuser -c eclipse

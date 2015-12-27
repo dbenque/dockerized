@@ -18,5 +18,7 @@ RUN pacman -S --noconfirm mercurial
 RUN eclipse -application org.eclipse.equinox.p2.director -noSplash -repository http://download.eclipse.org/technology/m2e/releases,http://download.eclipse.org/releases/mars -i org.eclipse.m2e.feature.feature.group
 RUN eclipse -application org.eclipse.equinox.p2.director -noSplash -repository http://mercurialeclipse.eclipselabs.org.codespot.com/hg.wiki/update_site/stable,http://download.eclipse.org/releases/mars -i mercurialeclipse.feature.group
 RUN eclipse -application org.eclipse.equinox.p2.director -noSplash -repository https://dl.google.com/eclipse/plugin/4.4,http://download.eclipse.org/releases/luna -i com.google.gdt.eclipse.suite.e44.feature.feature.group,com.google.appengine.eclipse.sdkbundle.feature.feature.group,com.google.gwt.eclipse.sdkbundle.feature.feature.group,com.google.appengine.eclipse.wtp.maven.feature.feature.group
+RUN eclipse -application org.eclipse.equinox.p2.director -noSplash -repository http://sdbg.github.io/p2,http://download.eclipse.org/releases/luna -i com.github.sdbg.feature.feature.group
+
 ADD launch.eclipse /
 CMD /launch.eclipse
